@@ -5,6 +5,8 @@ import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import coffeeSmokeVertexShader from "../../shaderSources/coffeeSmoke/vertex.glsl";
 import coffeeSmokeFragmentShader from "../../shaderSources/coffeeSmoke/fragment.glsl";
 
+import Button from "@/components/Button";
+
 const coffeeSmoke = () => {
   let animationFrame: number = 0;
   useEffect(() => {
@@ -143,7 +145,12 @@ const coffeeSmoke = () => {
     };
   }, []);
 
-  return <canvas className="webgl" />;
+  return (
+    <>
+      <canvas className="webgl" />
+      <Button name="coffeeSmoke" />
+    </>
+  );
 };
 
 export default coffeeSmoke;
