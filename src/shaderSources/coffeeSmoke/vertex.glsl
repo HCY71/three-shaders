@@ -14,7 +14,7 @@ void main () {
     vec3 rotatedPosition = position;
     
     // twist
-    float twistPerlin = texture(uPerlinTexture, vec2(.5, uv.y * .5 - uTime * .05)).r;
+    float twistPerlin = texture(uPerlinTexture, vec2(.1, uv.y * .1 - uTime * .05)).r;
     float angle =  position.y * twistPerlin;
     rotatedPosition.xz = rotate2D(rotatedPosition.xz, angle);
 
@@ -23,7 +23,7 @@ void main () {
         texture(uPerlinTexture, vec2(.25, uTime * .01)).r - .5, 
         texture(uPerlinTexture, vec2(.4, uTime * .01)).r - .5
     );
-    windOffset *= pow(uv.y, 2.5) * 5.0;
+    windOffset *= pow(uv.y, 2.5) * 7.0;
     rotatedPosition.xz += windOffset;
 ;
     // final position
