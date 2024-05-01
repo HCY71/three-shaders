@@ -1,12 +1,12 @@
 import Button from "@/components/Button";
 import Layout from "@/components/layouts/canvas";
-import CoffeeSmokeModel from "@/components/scenes/coffeeSmoke";
+import CoffeeSmokeScene from "@/components/scenes/CoffeeSmoke";
 
 const coffeeSmoke = () => {
   return (
     <>
       <Layout>
-        <CoffeeSmokeModel />
+        <CoffeeSmokeScene />
       </Layout>
       <Button name="coffeeSmoke" />
     </>
