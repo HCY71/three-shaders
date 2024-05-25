@@ -13,12 +13,12 @@ const coffeeSmoke = () => {
 
   const coffeeModel = useLoader(
     GLTFLoader,
-    "/assets/coffee_smoke/bakedModel.glb"
+    "/assets/coffee_smoke/bakedModel.glb",
   );
 
   const perlinTexture = useLoader(
     THREE.TextureLoader,
-    "/assets/coffee_smoke/perlin.png"
+    "/assets/coffee_smoke/perlin.png",
   );
   perlinTexture.wrapS = THREE.RepeatWrapping;
   perlinTexture.wrapT = THREE.RepeatWrapping;

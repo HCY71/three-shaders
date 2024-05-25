@@ -1,10 +1,8 @@
-import { useEffect } from "react";
 import * as THREE from "three";
 import { useThree, useFrame, useLoader } from "@react-three/fiber";
-import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { useControls } from "leva";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 
 import hologramVertexShader from "../../shaderSources/hologram/vertex.glsl";
 import hologramFragmentShader from "../../shaderSources/hologram/fragment.glsl";
@@ -13,22 +11,40 @@ const hologram = () => {
   let animationFrame: number = 0;
 
   // Debug
-  const debug = useControls({ clearColor: "#1d1f2a" });
+  const debug = useControls({
+    clearColor: "#0d0d10",
+    color: "#7cffff",
+    isGlitch: true,
+  });
 
-  const { camera } = useThree();
-  camera.position.set(5, 5, 5);
+  const { camera, gl } = useThree();
 
   const torusRef = useRef<THREE.Mesh>(null);
   const sphereRef = useRef<THREE.Mesh>(null);
+  const shaderMaterialRef = useRef<THREE.ShaderMaterial | null>(null);
+
+  const materialOptions = {
+    color: debug.color,
+    transparent: true,
+    side: THREE.DoubleSide,
+    depthWrite: false,
+    blending: THREE.AdditiveBlending,
+  };
 
   const shaderMaterial = new THREE.ShaderMaterial({
     vertexShader: hologramVertexShader,
     fragmentShader: hologramFragmentShader,
     uniforms: {
       uTime: new THREE.Uniform(0),
+      uColor: new THREE.Uniform(new THREE.Color(materialOptions.color)),
+      uIsGlitch: new THREE.Uniform(debug.isGlitch),
     },
     transparent: true,
+    side: THREE.DoubleSide,
+    depthWrite: false,
+    blending: THREE.AdditiveBlending,
   });
+  shaderMaterialRef.current = shaderMaterial;
 
   const suzanne = useLoader(GLTFLoader, "../assets/hologram/suzanne.glb");
   suzanne.scene.traverse((child: THREE.Object3D) => {
@@ -36,6 +52,21 @@ const hologram = () => {
       (child as THREE.Mesh).material = shaderMaterial;
     }
   });
+
+  useEffect(() => {
+    camera.position.set(5, 5, 5);
+  }, [camera]);
+
+  useEffect(() => {
+    if (shaderMaterialRef.current) {
+      shaderMaterialRef.current.uniforms.uColor.value.set(debug.color);
+      shaderMaterialRef.current.uniforms.uIsGlitch.value = debug.isGlitch;
+    }
+  }, [debug.color, debug.isGlitch]);
+
+  useEffect(() => {
+    gl.setClearColor(new THREE.Color(debug.clearColor));
+  }, [debug.clearColor, gl]);
 
   useFrame(({ clock }) => {
     const elapsedTime = clock.getElapsedTime();
