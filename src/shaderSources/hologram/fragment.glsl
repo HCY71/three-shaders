@@ -8,6 +8,7 @@ void main() {
     // normal 
     vec3 normal = normalize(vNormal);
     normal *= gl_FrontFacing ? 1.0 : -1.0;
+
     // stripes
     float stripes = mod(vPosition.y * 15.0 - uTime * .3, 1.0);
     stripes = pow(stripes, 3.0);
@@ -24,7 +25,6 @@ void main() {
     float holographic = stripes * fresnel;
     holographic += fresnel * 1.25;
     holographic *= falloff;
-
 
     // final color
     gl_FragColor = vec4(uColor, holographic);

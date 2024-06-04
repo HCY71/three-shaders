@@ -15,6 +15,12 @@ const links = [
     description:
       "The Hologram shader creates a mesmerizing, contour-lined holographic effect, perfect for futuristic and sci-fi visuals.",
   },
+  {
+    href: "/pokemonCard",
+    title: "PokemonCard",
+    description:
+      "PokemonCard is a shader that creates a holographic card effect.",
+  },
 ];
 
 const Index = () => {

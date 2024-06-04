@@ -8,8 +8,6 @@ import hologramVertexShader from "../../shaderSources/hologram/vertex.glsl";
 import hologramFragmentShader from "../../shaderSources/hologram/fragment.glsl";
 
 const hologram = () => {
-  let animationFrame: number = 0;
-
   // Debug
   const debug = useControls({
     clearColor: "#0d0d10",
